@@ -67,7 +67,7 @@ soup. It must be registered as utility with desired soup id.
     ...         catalog = Catalog()
     ...         userindexer = NodeAttributeIndexer('user')
     ...         catalog[u'user'] = CatalogFieldIndex(userindexer)
-    ...         textindexer = NodeAttributeIndexer('user')
+    ...         textindexer = NodeAttributeIndexer('text')
     ...         catalog[u'text'] = CatalogTextIndex(textindexer)
     ...         keywordindexer = NodeAttributeIndexer('keywords')
     ...         catalog[u'keywords'] = CatalogKeywordIndex(keywordindexer)
@@ -124,7 +124,7 @@ Add some more Records::
     >>> record.attrs['text'] = u'foo x y'
     >>> record.attrs['keywords'] = [u'1', u'4', u'5']
     >>> rid = soup.add(record)    
-    >>> u1records = [r for r in soup.query(user=2*('user1',))]
+    >>> u1records = [r for r in soup.query(Eq('user', 'user1'))]
     >>> u1records
     [<Record object 'None' at ...>, <Record object 'None' at ...>]
 
@@ -134,36 +134,38 @@ Change user attribute of one record::
 
 The query still returns the old result. The Record must be reindexed::
 
-    >>> len(list(soup.query(user=2*('user1',))))
+    >>> len(list(soup.query(Eq('user', 'user1'))))
     2
 
     >>> soup.reindex([u1records[0]])
-    >>> len(list(soup.query(user=2*('user1',))))
+    >>> len(list(soup.query(Eq('user', 'user1'))))
     1
 
-    >>> len(list(soup.query(user=2*('user2',))))
+    >>> len(list(soup.query(Eq('user', 'user2'))))
     2
 
 Check Text index::
 
-    >>> len(list(soup.query(text='foo')))
+    >>> from repoze.catalog.query import Contains 
+    >>> len(list(soup.query(Contains('text', 'foo'))))
     3
 
-    >>> len(list(soup.query(text='bar')))
+    >>> len(list(soup.query(Contains('text', 'bar'))))
     2
 
-    >>> len(list(soup.query(text='x')))
+    >>> len(list(soup.query(Contains('text', 'x'))))
     1
 
-    >>> len(list(soup.query(text='fo')))
+    >>> len(list(soup.query(Contains('text', 'fo'))))
     0
 
 Check keyword index::
 
-    >>> len(list(soup.query(keywords=['1'])))
+    >>> from repoze.catalog.query import Any 
+    >>> len(list(soup.query(Any('keywords', ['1']))))
     3
     
-    >>> len(list(soup.query(keywords=[u'ü'])))
+    >>> len(list(soup.query(Any('keywords', [u'ü']))))
     1
 
 You can reindex all records in soup at once::
@@ -175,7 +177,7 @@ You can reindex all records in soup at once::
 
     >>> all[-1].attrs['user'] = 'user3'
     >>> soup.reindex()
-    >>> len(list(soup.query(user=2*('user3',))))
+    >>> len(list(soup.query(Eq('user', 'user3'))))
     1
     
 Rebuild
@@ -185,21 +187,30 @@ You can also rebuild the catalog. In this case the catalog factory is called
 again and the new catalog is used. Lets modify catalog of our catalog factory.
 Never do this in production evironments::
 
-    >>> from collective.soup.interfaces import INodeAttributeIndexer
-    >>> from zope.catalog.field import FieldIndex
-    >>> catalogfactory = getUtility(ICatalogFactory, name='mysoup')
-    >>> catalogfactory.catalog[u'name'] = FieldIndex(field_name='name',
-    ...                                   interface=INodeAttributeIndexer)
-    >>> catalogfactory.catalog[u'name']
-    <zope.catalog.field.FieldIndex object at ...>
+    >>> @implementer(ICatalogFactory)
+    ... class MySoupCatalogFactoryNew(object):
+    ...
+    ...     def __call__(self):
+    ...         catalog = Catalog()
+    ...         userindexer = NodeAttributeIndexer('user')
+    ...         catalog[u'user'] = CatalogFieldIndex(userindexer)
+    ...         textindexer = NodeAttributeIndexer('text')
+    ...         catalog[u'text'] = CatalogTextIndex(textindexer)
+    ...         keywordindexer = NodeAttributeIndexer('keywords')
+    ...         catalog[u'keywords'] = CatalogKeywordIndex(keywordindexer)
+    ...         nameindexer = NodeAttributeIndexer('name')
+    ...         catalog[u'name'] = CatalogFieldIndex(nameindexer)
+    ...         return catalog
+    
+    >>> provideUtility(MySoupCatalogFactoryNew(), name="mysoup")
 
 Set name attribute on some record data, reindex soup and check results::
 
     >>> all[0].attrs['name'] = 'name'
     >>> all[1].attrs['name'] = 'name'
     >>> all[2].attrs['name'] = 'name'
-    >>> soup.reindex()
-    >>> len(list(soup.query(name=2*('name',))))
+    >>> soup.rebuild()
+    >>> len(list(soup.query(Eq('name', 'name'))))
     3
 
 Delete
@@ -208,7 +219,7 @@ Delete
 Delete records::
 
     >>> del soup[all[0]]
-    >>> len(list(soup.query(name=2*('name',))))
+    >>> len(list(soup.query(Eq('name', 'name'))))
     2
     
 LazyRecords
@@ -217,16 +228,16 @@ LazyRecords
 For huge expected results we can query LazyRecords. They return the real record
 on call::
 
-    >>> lazy = [l for l in soup.lazy(name=2*('name',))]
+    >>> lazy = [l for l in soup.lazy(Eq('name', 'name'))]
     >>> lazy
-    [<collective.soup.soup.LazyRecord object at ...>,
-    <collective.soup.soup.LazyRecord object at ...>]
+    [<souper.soup.LazyRecord object at ...>,
+    <souper.soup.LazyRecord object at ...>]
 
     >>> lazy[0]()
     <Record object 'None' at ...>
 
-    >>> soup = getSoup(site, u'mysoup')
-    >>> len(list(soup.query(name=2*('name',))))
+    >>> soup = get_soup(u'mysoup', context)
+    >>> len(list(soup.query(Eq('name', 'name'))))
     2
 
 Clear soup

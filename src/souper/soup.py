@@ -106,16 +106,14 @@ class Soup(object):
 
     def clear(self):
         self.storage.__init__()
-        request = self.context.REQUEST
-        cachekey = self._cachekey
-        del request[cachekey]
         self.rebuild()
 
     def rebuild(self):
         """trashed the existing catalog and creates a new one using the
         named utility ICatalogFactory.
         """
-        self.storage.catalog = getUtility(ICatalogFactory, name=self.id)()
+        self.storage.catalog = getUtility(ICatalogFactory,
+                                          name=self.soup_name)()
         self.reindex()
 
     def reindex(self, records=None):
