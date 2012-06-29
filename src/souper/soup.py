@@ -4,7 +4,6 @@ from zope.component import (
     getUtility,
     queryAdapter,
 )
-from zope.index.interfaces import IIndexSort
 from BTrees.IOBTree import IOBTree
 from BTrees.Length import Length
 from persistent import Persistent
