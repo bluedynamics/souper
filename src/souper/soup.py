@@ -53,8 +53,7 @@ class Soup(object):
 
     @property
     def storage(self):
-        locator = queryAdapter(self.context, IStorageLocator,
-                               name=self.soup_name)
+        locator = queryAdapter(self.context, IStorageLocator)
         if not locator:
             raise ValueError("Can't find IStorageLocator adapter for context "
                              "%s in order to locate soup '%s'." % \
