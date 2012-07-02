@@ -26,7 +26,7 @@ The we need some simple StorageLocator::
     ...            self.context.attrs[soup_name] = SoupData()
     ...        return self.context.attrs[soup_name]
 
-    >>> provideAdapter(StorageLocator, adapts=[Interface], name='mysoup')
+    >>> provideAdapter(StorageLocator, adapts=[Interface])
 
 and query the soup named 'mysoup'.
 
