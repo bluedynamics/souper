@@ -76,7 +76,10 @@ class Soup(object):
             factory = getUtility(ICatalogFactory, name=self.soup_name)
             storage.catalog = factory()
         return storage.catalog
-
+    
+    def get(self, intid):
+        return self.data[intid]
+    
     def add(self, record):
         """adds a new record to the soup, creates soup unique id and index it.
         """

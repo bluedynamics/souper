@@ -99,7 +99,12 @@ Create a Record and add it to soup.::
     >>> record.attrs['text'] = u'foo bar baz'
     >>> record.attrs['keywords'] = [u'1', u'2', u'ü']
     >>> rid = soup.add(record)
-    
+
+Get record directly by intid::
+
+    >>> soup.get(record.intid) is record
+    True
+
 Query
 =====
 
