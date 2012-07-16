@@ -168,6 +168,17 @@ Check keyword index::
     >>> len(list(soup.query(Any('keywords', [u'ü']))))
     1
 
+Check sorting::
+
+    >>> res = soup.query(Eq('user', ['user1', 'user2']), sort_index='user')
+    >>> [_.attrs['user'] for _ in res]
+    ['user1', 'user2', 'user2']
+    
+    >>> res = soup.query(
+    ...     Eq('user', ['user1', 'user2']), sort_index='user', reverse=True)
+    >>> [_.attrs['user'] for _ in res]
+    ['user2', 'user2', 'user1']
+
 You can reindex all records in soup at once::
 
     >>> all = [r for r in soup.data.values()]

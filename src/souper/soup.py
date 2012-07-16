@@ -88,18 +88,18 @@ class Soup(object):
 
     def query(self, queryobject, sort_index=None, limit=None, sort_type=None,
               reverse=False, names=None):
-        num, resultseq = self.catalog.query(queryobject, sort_index=None,
-                                            limit=None, sort_type=None,
-                                            reverse=False, names=None)
-        for iid in resultseq:
+        result = self.catalog.query(queryobject, sort_index=sort_index,
+                                    limit=limit, sort_type=sort_type,
+                                    reverse=reverse, names=names)
+        for iid in result[1]:
             yield self.data[iid]
 
     def lazy(self, queryobject, sort_index=None, limit=None, sort_type=None,
               reverse=False, names=None):
-        num, resultseq = self.catalog.query(queryobject, sort_index=None,
-                                            limit=None, sort_type=None,
-                                            reverse=False, names=None)
-        for iid in resultseq:
+        result = self.catalog.query(queryobject, sort_index=sort_index,
+                                    limit=limit, sort_type=sort_type,
+                                    reverse=reverse, names=names)
+        for iid in result[1]:
             yield LazyRecord(iid, self)
 
     def clear(self):
