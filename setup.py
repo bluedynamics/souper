@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0-unreleased'
+version = '1.0pre1'
 shortdesc = \
 'Souper - Generic Indexed Storage based the Zope Object Database'
 longdesc = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
