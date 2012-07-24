@@ -74,7 +74,7 @@ class Soup(object):
         storage = self.storage
         if not storage.catalog:
             factory = getUtility(ICatalogFactory, name=self.soup_name)
-            storage.catalog = factory()
+            storage.catalog = factory(self.context)
         return storage.catalog
     
     def get(self, intid):
@@ -114,7 +114,7 @@ class Soup(object):
         named utility ICatalogFactory.
         """
         self.storage.catalog = getUtility(ICatalogFactory,
-                                          name=self.soup_name)()
+                                          name=self.soup_name)(self.context)
         self.reindex()
 
     def reindex(self, records=None):

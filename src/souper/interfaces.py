@@ -58,7 +58,7 @@ class ICatalogFactory(Interface):
     """Factory for the catalog used for Soup.
     """
 
-    def __call__():
+    def __call__(context):
         """Create and return the Catalog.
 
         @param return: zope.app.catalog.catalog.Catalog instance

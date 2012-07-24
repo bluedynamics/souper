@@ -63,7 +63,7 @@ soup. It must be registered as utility with desired soup id.
     >>> @implementer(ICatalogFactory)
     ... class MySoupCatalogFactory(object):
     ...
-    ...     def __call__(self):
+    ...     def __call__(self, context=None):
     ...         catalog = Catalog()
     ...         userindexer = NodeAttributeIndexer('user')
     ...         catalog[u'user'] = CatalogFieldIndex(userindexer)
@@ -206,7 +206,7 @@ Never do this in production evironments::
     >>> @implementer(ICatalogFactory)
     ... class MySoupCatalogFactoryNew(object):
     ...
-    ...     def __call__(self):
+    ...     def __call__(self, context):
     ...         catalog = Catalog()
     ...         userindexer = NodeAttributeIndexer('user')
     ...         catalog[u'user'] = CatalogFieldIndex(userindexer)
