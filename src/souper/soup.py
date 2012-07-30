@@ -10,7 +10,7 @@ from persistent import Persistent
 from plumber import (
     default,
     plumber,
-    Part,
+    Behavior,
 )
 from node.ext.zodb import OOBTNode
 from .interfaces import (
@@ -164,13 +164,13 @@ class LazyRecord(object):
 
 
 @implementer(IRecord)
-class RecordPart(Part):
+class RecordBehavior(Behavior):
     intid = default(None)
 
 
 class Record(OOBTNode):
     __metaclass__ = plumber
-    __plumbing__ = RecordPart
+    __plumbing__ = RecordBehavior
 
 
 @implementer(INodeAttributeIndexer)
