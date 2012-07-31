@@ -90,19 +90,23 @@ class Soup(object):
         return record.intid
 
     def query(self, queryobject, sort_index=None, limit=None, sort_type=None,
-              reverse=False, names=None):
-        result = self.catalog.query(queryobject, sort_index=sort_index,
-                                    limit=limit, sort_type=sort_type,
-                                    reverse=reverse, names=names)
-        for iid in result[1]:
+              reverse=False, names=None, with_size=False):
+        size, iids = self.catalog.query(queryobject, sort_index=sort_index,
+                                        limit=limit, sort_type=sort_type,
+                                        reverse=reverse, names=names)
+        if with_size:
+            yield size
+        for iid in iids:
             yield self.data[iid]
 
     def lazy(self, queryobject, sort_index=None, limit=None, sort_type=None,
-              reverse=False, names=None):
-        result = self.catalog.query(queryobject, sort_index=sort_index,
-                                    limit=limit, sort_type=sort_type,
-                                    reverse=reverse, names=names)
-        for iid in result[1]:
+              reverse=False, names=None, with_size=False):
+        size, iids = self.catalog.query(queryobject, sort_index=sort_index,
+                                        limit=limit, sort_type=sort_type,
+                                        reverse=reverse, names=names)
+        if with_size:
+            yield size
+        for iid in iids:
             yield LazyRecord(iid, self)
 
     def clear(self):
