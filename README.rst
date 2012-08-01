@@ -12,6 +12,5 @@ Contributors
 ============
 
 - Jens W. Klein <jk@kleinundpartner.at>
-
-
+- Robert Niederreiter <office@squarewave.com>
 
