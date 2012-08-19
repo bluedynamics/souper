@@ -19,6 +19,7 @@ from .interfaces import (
     ICatalogFactory,
     IStorageLocator,
     INodeAttributeIndexer,
+    INodeTextIndexer,
 )
 
 
@@ -180,10 +181,26 @@ class Record(OOBTNode):
 @implementer(INodeAttributeIndexer)
 class NodeAttributeIndexer(object):
 
-    def __init__(self, attr_key):
-        self.attr_key = attr_key
+    def __init__(self, attr):
+        self.attr = attr
 
-    def __call__(self, nodecontext, default):
-        if self.attr_key in nodecontext.attrs:
-            return nodecontext.attrs[self.attr_key]
+    def __call__(self, context, default):
+        if self.attr in context.attrs:
+            return context.attrs[self.attr]
         return default
+
+
+@implementer(INodeTextIndexer)
+class NodeTextIndexer(object):
+    
+    def __init__(self, attrs):
+        self.attrs = attrs
+    
+    def __call__(self, context, default):
+        values = list()
+        for attr in self.attrs:
+            values.append(context.attrs.get(attr, u''))
+        values = [_.strip().decode('utf-8') for _ in values if _.strip()]
+        if not values:
+            return default
+        return u' '.join(values)

@@ -72,12 +72,22 @@ class IStorageLocator(Interface):
         """
 
 
-class INodeAttributeIndexer(Interface):
-    """Access an node attribute
+class IRecordIndexer(Interface):
+    """Interface to lookup values for being indexed from record.
+    """
+    
+    def __call__(context, default):
+        """returns value to be indexed.
+        """
+
+
+class INodeAttributeIndexer(IRecordIndexer):
+    """Indexer for single node attribute value.
     """
 
-    attr_name = Attribute(u"the name of the nodes attribute to access")
 
-    def __call__(nodecontext, default):
-        """returns value of node in contexts attribute with name attr_name
-        """
+class INodeTextIndexer(IRecordIndexer):
+    """Indexer combining several node attributes for fulltext search.
+    
+    All combined attribute values must be string.
+    """
