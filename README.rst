@@ -211,6 +211,13 @@ To remove all data from the soup and empty and rebuild the catalog call
 
     >>> soup.clear()
 
+Installation Notes
+==================
+
+In order to use souper ``node.ext.zodb`` is needed. As this beta was released
+there was no release (will be done soon). Please check
+`pypi <http://pypi.python.org>`_ if it is there, otherwise please fetch
+`node.ext.zodb from github <https://github.com/bluedynamics/node.ext.zodb>`_
 
 Source Code
 ===========
