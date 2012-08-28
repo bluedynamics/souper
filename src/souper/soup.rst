@@ -5,12 +5,12 @@ Create object which can store soup data,
 
 ::
 
-    >>> from zope.interface import implementer
     >>> from node.ext.zodb import OOBTNode
     >>> context = OOBTNode()
     
 The we need some simple StorageLocator::
 
+    >>> from zope.interface import implementer
     >>> from zope.interface import Interface
     >>> from zope.component import provideAdapter 
     >>> from souper.interfaces import IStorageLocator    

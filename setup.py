@@ -3,7 +3,7 @@ import os
 
 version = '1.0pre1'
 shortdesc = \
-'Souper - Generic Indexed Storage based the Zope Object Database'
+'Souper - Generic Indexed Storage based on ZODB'
 longdesc = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 longdesc += open(os.path.join(os.path.dirname(__file__), 'HISTORY.rst')).read()
 longdesc += open(os.path.join(os.path.dirname(__file__), 'LICENSE.rst')).read()
