@@ -96,6 +96,8 @@ class Soup(object):
                                         limit=limit, sort_type=sort_type,
                                         reverse=reverse, names=names)
         if with_size:
+            # XXX: should this be 'return' instead of 'yield'. yielding size is
+            #      useless
             yield size
         for iid in iids:
             yield self.data[iid]
@@ -106,6 +108,8 @@ class Soup(object):
                                         limit=limit, sort_type=sort_type,
                                         reverse=reverse, names=names)
         if with_size:
+            # XXX: should this be 'return' instead of 'yield'. yielding size is
+            #      useless
             yield size
         for iid in iids:
             yield LazyRecord(iid, self)
@@ -199,7 +203,10 @@ class NodeTextIndexer(object):
     def __call__(self, context, default):
         values = list()
         for attr in self.attrs:
-            values.append(context.attrs.get(attr, u''))
+            val = context.attrs.get(attr, u'')
+            if not isinstance(val, basestring):
+                val = str(val)
+            values.append(val)
         values = [_.strip().decode('utf-8') for _ in values if _.strip()]
         if not values:
             return default
