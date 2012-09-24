@@ -96,8 +96,6 @@ class Soup(object):
                                         limit=limit, sort_type=sort_type,
                                         reverse=reverse, names=names)
         if with_size:
-            # XXX: should this be 'return' instead of 'yield'. yielding size is
-            #      useless
             yield size
         for iid in iids:
             yield self.data[iid]
@@ -108,8 +106,6 @@ class Soup(object):
                                         limit=limit, sort_type=sort_type,
                                         reverse=reverse, names=names)
         if with_size:
-            # XXX: should this be 'return' instead of 'yield'. yielding size is
-            #      useless
             yield size
         for iid in iids:
             yield LazyRecord(iid, self)
