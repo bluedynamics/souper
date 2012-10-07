@@ -15,6 +15,7 @@ Souper can be used used in any python application using the ZODB, such as
 Using Souper
 ============
 
+
 Providing a Locator
 -------------------
 
@@ -47,7 +48,8 @@ by name::
     >>> soup = get_soup('mysoup', context)
     >>> soup
     <souper.soup.Soup object at 0x...>
-    
+
+
 Providing a Catalog Factory
 ---------------------------
 
@@ -121,6 +123,7 @@ searching::
     >>> record['homeaddress'].attrs['town'] = 'Innsbruck'
     >>> record['homeaddress'].attrs['country'] = 'Austria'
 
+
 Access data
 -----------
 
@@ -134,6 +137,7 @@ All records can be accessed using utilizing the container BTree::
     
     >>> soup.data.keys()[0] == record_id
     True
+
 
 Query data
 ----------
@@ -169,6 +173,7 @@ generator returning light weight objects. Records are fetched on call::
 Here the size is passed as first value of the geneartor too if ``with_size=True``
 is passed.
 
+
 Delete a record
 ---------------
 
@@ -176,7 +181,8 @@ To remove a record from the soup python ``del`` is used like one would do on
 any dict:: 
 
     >>> del soup[record_id]
-    
+
+
 Reindex
 -------
 
@@ -189,8 +195,8 @@ Sometimes one may want to reindex all data. Then ``reindex`` has to be
 called without parameters. It may take a while::
 
     >>> soup.reindex()
-         
- 
+
+
 Rebuild catalog
 ---------------
 
@@ -199,7 +205,7 @@ a rebuild of the catalog i needed. It replaces the current catalog with a new
 one created by the catalog factory and reindexes all data. It may take while::   
 
     >>> soup.rebuild()
-     
+
 
 Reset (or clear) the soup
 -------------------------
@@ -211,6 +217,7 @@ To remove all data from the soup and empty and rebuild the catalog call
 
     >>> soup.clear()
 
+
 Installation Notes
 ==================
 
@@ -218,6 +225,7 @@ In order to use souper ``node.ext.zodb`` is needed. As this beta was released
 there was no release (will be done soon). Please check
 `pypi <http://pypi.python.org>`_ if it is there, otherwise please fetch
 `node.ext.zodb from github <https://github.com/bluedynamics/node.ext.zodb>`_
+
 
 Source Code
 ===========
@@ -231,6 +239,6 @@ We'd be happy to see many forks and pull-requests to make souper even better.
 Contributors
 ============
 
-- Jens W. Klein <jk@kleinundpartner.at>
-- Robert Niederreiter <office@squarewave.com>
+- Robert Niederreiter <rnix [at] squarewave [dot] at>
 
+- Jens W. Klein <jk [at] kleinundpartner [dot] at>

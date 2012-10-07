@@ -2,7 +2,7 @@
 History
 =======
 
-1.0-beta
---------
+1.0
+---
 
-- make it work [jensens, rnix, et al]
+- make it work [rnix, jensens, et al]
