@@ -23,7 +23,7 @@ from .interfaces import (
 )
 
 
-def get_soup(soup_name, context):
+def get_soup(context, soup_name):
     return Soup(soup_name, context)
 
 
