@@ -24,6 +24,11 @@ from .interfaces import (
 
 
 def get_soup(context, soup_name):
+    # BBB
+    if type(context) == str:
+        from zope.deferredimport import deprecated
+        deprecated("Signature order switched. Now: context, soup_name")
+        soup_name, context = context, soup_name
     return Soup(soup_name, context)
 
 
