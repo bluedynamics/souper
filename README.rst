@@ -180,7 +180,7 @@ Delete a record
 To remove a record from the soup python ``del`` is used like one would do on
 any dict:: 
 
-    >>> del soup[record_id]
+    >>> del soup[record]
 
 
 Reindex
