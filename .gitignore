@@ -10,6 +10,7 @@ develop-eggs
 src/packages
 *~
 .pydevproject
+.pydevproject.bak
 .project
 var
 .DS_Store

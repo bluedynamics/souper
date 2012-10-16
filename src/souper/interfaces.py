@@ -8,10 +8,8 @@ from zope.interface.common.mapping import IFullMapping
 class ISoup(Interface):
     """The Container Interface.
     """
-
     soup_name = Attribute(u"The identifier of this Soup")
     nextrecordindex = Attribute(u"The next record index to use.")
-
 
     def add(record):
         """Add record to soup.
@@ -75,7 +73,7 @@ class IStorageLocator(Interface):
 class IRecordIndexer(Interface):
     """Interface to lookup values for being indexed from record.
     """
-    
+
     def __call__(context, default):
         """returns value to be indexed.
         """
@@ -88,6 +86,6 @@ class INodeAttributeIndexer(IRecordIndexer):
 
 class INodeTextIndexer(IRecordIndexer):
     """Indexer combining several node attributes for fulltext search.
-    
+
     All combined attribute values must be string.
     """

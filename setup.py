@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0'
+version = '1.0.1dev'
 shortdesc = \
 'Souper - Generic Indexed Storage based on ZODB'
 longdesc = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
@@ -26,7 +26,7 @@ setup(name='souper',
       url=u'http://packages.python.org/souper',
       license='BSD',
       packages=find_packages('src'),
-      package_dir = {'': 'src'},
+      package_dir={'': 'src'},
       namespace_packages=['souper'],
       include_package_data=True,
       zip_safe=True,
@@ -37,7 +37,7 @@ setup(name='souper',
       ],
       tests_require=tests_require,
       test_suite="souper.tests.test_suite",
-      extras_require = dict(
+      extras_require=dict(
           test=tests_require,
       ),
 )

@@ -77,10 +77,10 @@ class Soup(object):
             factory = getUtility(ICatalogFactory, name=self.soup_name)
             storage.catalog = factory(self.context)
         return storage.catalog
-    
+
     def get(self, intid):
         return self.data[intid]
-    
+
     def add(self, record):
         """adds a new record to the soup, creates soup unique id and index it.
         """
@@ -192,10 +192,10 @@ class NodeAttributeIndexer(object):
 
 @implementer(INodeTextIndexer)
 class NodeTextIndexer(object):
-    
+
     def __init__(self, attrs):
         self.attrs = attrs
-    
+
     def __call__(self, context, default):
         values = list()
         for attr in self.attrs:
