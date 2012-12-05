@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0.1dev'
+version = '1.0.1'
 shortdesc = \
 'Souper - Generic Indexed Storage based on ZODB'
 longdesc = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
