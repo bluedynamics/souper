@@ -1,13 +1,12 @@
 
-History
-=======
+Changelog
+=========
 
-1.0.2
------
+1.0.2dev (unreleased)
+-------------------
 
 - fix: unicode with special chars in text indexer failed.
   [jensens, 2014-02-25]
-
 
 1.0.1
 -----
@@ -19,7 +18,6 @@ History
   [rnix, 2012-10-16]
 
 - Fix documentation.
-
 
 1.0
 ---
