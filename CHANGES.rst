@@ -2,8 +2,8 @@
 Changelog
 =========
 
-1.0.2dev (unreleased)
--------------------
+1.0.2 (2015-02-25)
+------------------
 
 - fix: unicode with special chars in text indexer failed.
   [jensens, 2014-02-25]
