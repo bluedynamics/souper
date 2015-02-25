@@ -2,12 +2,13 @@ from setuptools import setup, find_packages
 import os
 
 version = '1.0.1'
-shortdesc = \
-'Souper - Generic Indexed Storage based on ZODB'
+shortdesc = 'Souper - Generic Indexed Storage based on ZODB'
 longdesc = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 longdesc += open(os.path.join(os.path.dirname(__file__), 'CHANGES.rst')).read()
 longdesc += open(os.path.join(os.path.dirname(__file__), 'LICENSE.rst')).read()
-tests_require = ['interlude']
+tests_require = [
+    'interlude', 'node.ext.zodb[test]', 'odict[test]', 'node[test]'
+]
 
 setup(name='souper',
       version=version,
