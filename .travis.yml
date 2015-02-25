@@ -2,5 +2,5 @@ language: python
 python: "2.7"
 install:
   - pip install zc.buildout
-  - ./bin/buildout -q
+  - buildout -q
 script: ./bin/test
