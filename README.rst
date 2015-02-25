@@ -26,12 +26,12 @@ to be provided. Let's assume context is some persistent dict-like instance::
 
     >>> from zope.interface import implementer
     >>> from zope.interface import Interface
-    >>> from zope.component import provideAdapter 
-    >>> from souper.interfaces import IStorageLocator    
+    >>> from zope.component import provideAdapter
+    >>> from souper.interfaces import IStorageLocator
     >>> from souper.soup import SoupData
     >>> @implementer(IStorageLocator)
     ... class StorageLocator(object):
-    ...     
+    ...
     ...     def __init__(self, context):
     ...        self.context = context
     ...
@@ -41,7 +41,7 @@ to be provided. Let's assume context is some persistent dict-like instance::
     ...        return self.context[soup_name]
 
     >>> provideAdapter(StorageLocator, adapts=[Interface])
- 
+
 So we have locator creating soups by name on the fly. Now its easy to get a soup
 by name::
 
@@ -61,16 +61,17 @@ The name of the utility has to the the same as the soup have.
 
 Here ``repoze.catalog`` is used and to let the indexes access the data on the
 records by key the ``NodeAttributeIndexer`` is used. For special cases one may
-write its custom indexers, but the default one is fine most of the time:: 
+write its custom indexers, but the default one is fine most of the time::
 
     >>> from souper.interfaces import ICatalogFactory
     >>> from souper.soup import NodeAttributeIndexer
+    >>> from souper.soup import NodeTextIndexer
     >>> from zope.component import provideUtility
     >>> from repoze.catalog.catalog import Catalog
-    >>> from repoze.catalog.indexes.field import CatalogFieldIndex    
+    >>> from repoze.catalog.indexes.field import CatalogFieldIndex
     >>> from repoze.catalog.indexes.text import CatalogTextIndex
     >>> from repoze.catalog.indexes.keyword import CatalogKeywordIndex
-    
+
     >>> @implementer(ICatalogFactory)
     ... class MySoupCatalogFactory(object):
     ...
@@ -78,16 +79,16 @@ write its custom indexers, but the default one is fine most of the time::
     ...         catalog = Catalog()
     ...         userindexer = NodeAttributeIndexer('user')
     ...         catalog[u'user'] = CatalogFieldIndex(userindexer)
-    ...         textindexer = NodeAttributeIndexer('text')
+    ...         textindexer = NodeTextIndexer(['text', 'user')
     ...         catalog[u'text'] = CatalogTextIndex(textindexer)
     ...         keywordindexer = NodeAttributeIndexer('keywords')
     ...         catalog[u'keywords'] = CatalogKeywordIndex(keywordindexer)
     ...         return catalog
-    
+
     >>> provideUtility(MySoupCatalogFactory(), name="mysoup")
- 
+
 The catalog factory is used soup-internal only but one may want to check if it
-works fine:: 
+works fine::
 
     >>> catalogfactory = getUtility(ICatalogFactory, name='mysoup')
     >>> catalogfactory
@@ -95,10 +96,10 @@ works fine::
 
     >>> catalog = catalogfactory()
     >>> sorted(catalog.items())
-    [(u'keywords', <repoze.catalog.indexes.keyword.CatalogKeywordIndex object at 0x...>), 
-    (u'text', <repoze.catalog.indexes.text.CatalogTextIndex object at 0x...>), 
+    [(u'keywords', <repoze.catalog.indexes.keyword.CatalogKeywordIndex object at 0x...>),
+    (u'text', <repoze.catalog.indexes.text.CatalogTextIndex object at 0x...>),
     (u'user', <repoze.catalog.indexes.field.CatalogFieldIndex object at 0x...>)]
-        
+
 
 Adding records
 --------------
@@ -117,7 +118,7 @@ added to the soup. A record has attributes containing the data::
 
 A record may contains other records. But to index them one would need a custom
 indexer, so usally conatined records are valuable for later display, not for
-searching:: 
+searching::
 
     >>> record['subrecord'] = Record()
     >>> record['homeaddress'].attrs['zip'] = '6020'
@@ -134,8 +135,8 @@ Even without any query a record can be fetched by id::
     >>> soup = get_soup('mysoup', context)
     >>> record = soup.get(record_id)
 
-All records can be accessed using utilizing the container BTree::    
-    
+All records can be accessed using utilizing the container BTree::
+
     >>> soup.data.keys()[0] == record_id
     True
 
@@ -145,9 +146,9 @@ Query data
 
 `How to query a repoze catalog is documented well. <http://docs.repoze.org/catalog/usage.html#searching>`_
 Sorting works the same too. Queries are passed to soups ``query`` method (which
-uses then repoze catalog). It returns a generator:: 
+uses then repoze catalog). It returns a generator::
 
-    >>> from repoze.catalog.query import Eq 
+    >>> from repoze.catalog.query import Eq
     >>> [r for r in soup.query(Eq('user', 'user1'))]
     [<Record object 'None' at ...>]
 
@@ -156,18 +157,18 @@ uses then repoze catalog). It returns a generator::
 
 To also get the size of the result set pass a ``with_size=True`` to the query.
 The first item returned by the generator is the size::
-    
+
     >>> [r for r in soup.query(Eq('user', 'user1'), with_size-True)]
     [1, <Record object 'None' at ...>]
-    
-    
+
+
 To optimize handling of large result sets one may not to fetch the record but a
 generator returning light weight objects. Records are fetched on call::
 
     >>> lazy = [l for l in soup.lazy(Eq('name', 'name'))]
     >>> lazy
-    [<souper.soup.LazyRecord object at ...>, 
-    
+    [<souper.soup.LazyRecord object at ...>,
+
     >>> lazy[0]()
     <Record object 'None' at ...>
 
@@ -179,7 +180,7 @@ Delete a record
 ---------------
 
 To remove a record from the soup python ``del`` is used like one would do on
-any dict:: 
+any dict::
 
     >>> del soup[record]
 
@@ -203,7 +204,7 @@ Rebuild catalog
 
 Usally after a change of catalog factory was made - i.e. some index was added -
 a rebuild of the catalog i needed. It replaces the current catalog with a new
-one created by the catalog factory and reindexes all data. It may take while::   
+one created by the catalog factory and reindexes all data. It may take while::
 
     >>> soup.rebuild()
 

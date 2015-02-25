@@ -2,6 +2,12 @@
 History
 =======
 
+1.0.2
+-----
+
+- fix: unicode with special chars in text indexer failed.
+  [jensens, 2014-02-25]
+
 
 1.0.1
 -----

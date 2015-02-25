@@ -203,7 +203,14 @@ class NodeTextIndexer(object):
             if not isinstance(val, basestring):
                 val = str(val)
             values.append(val)
-        values = [_.strip().decode('utf-8') for _ in values if _.strip()]
-        if not values:
+        uvalues = list()
+        for value in values:
+            value = value.strip()
+            if not value:
+                continue
+            if not isinstance(value, unicode):
+                value = value.decode('utf-8')
+            uvalues.append(value)
+        if not uvalues:
             return default
-        return u' '.join(values)
+        return u' '.join(uvalues)

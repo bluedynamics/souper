@@ -120,7 +120,7 @@ Check querying::
 Add some more Records::
 
     >>> record = Record()
-    >>> record.attrs['user'] = 'usär1'
+    >>> record.attrs['user'] = 'user1'
     >>> record.attrs['text'] = u'foo bar bäm'
     >>> record.attrs['keywords'] = [u'1', u'3', u'4']
     >>> rid = soup.add(record)
@@ -143,7 +143,7 @@ The query still returns the old result. The Record must be reindexed::
     2
 
     >>> soup.reindex([u1records[0]])
-    >>> len(list(soup.query(Eq('user', 'user1'))))
+    >>> len(list(soup.query(Eq('user', u'user1'))))
     1
 
     >>> len(list(soup.query(Eq('user', 'user2'))))
