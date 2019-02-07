@@ -33,6 +33,7 @@ setup(name='souper',
       zip_safe=True,
       install_requires=[
           'setuptools',
+          'six',
           'node.ext.zodb',
           'repoze.catalog',
       ],

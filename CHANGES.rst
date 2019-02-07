@@ -5,7 +5,8 @@ Changelog
 1.0.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Python 2/3 compatibility
+  [agitator]
 
 
 1.0.2 (2015-02-25)

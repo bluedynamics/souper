@@ -1,26 +1,21 @@
 import random
 from zope.interface import implementer
-from zope.component import (
-    getUtility,
-    queryAdapter,
-)
+from zope.component import getUtility
+from zope.component import queryAdapter
 from BTrees.IOBTree import IOBTree
 from BTrees.Length import Length
 from persistent import Persistent
-from plumber import (
-    default,
-    plumber,
-    Behavior,
-)
+from plumber import default
+from plumber import plumber
+from plumber import Behavior
 from node.ext.zodb import OOBTNode
-from .interfaces import (
-    ISoup,
-    IRecord,
-    ICatalogFactory,
-    IStorageLocator,
-    INodeAttributeIndexer,
-    INodeTextIndexer,
-)
+from souper.interfaces import ISoup
+from souper.interfaces import IRecord
+from souper.interfaces import ICatalogFactory
+from souper.interfaces import IStorageLocator
+from souper.interfaces import INodeAttributeIndexer
+from souper.interfaces import INodeTextIndexer
+import six
 
 
 def get_soup(soup_name, context):
@@ -139,7 +134,7 @@ class Soup(object):
         try:
             del self.data[record.intid]
             self.storage.length.change(-1)
-        except Exception, e:
+        except Exception as e:
             raise e
         self.catalog.unindex_doc(record.intid)
 
@@ -200,7 +195,7 @@ class NodeTextIndexer(object):
         values = list()
         for attr in self.attrs:
             val = context.attrs.get(attr, u'')
-            if not isinstance(val, basestring):
+            if not isinstance(val, six.string_types):
                 val = str(val)
             values.append(val)
         uvalues = list()
@@ -208,7 +203,7 @@ class NodeTextIndexer(object):
             value = value.strip()
             if not value:
                 continue
-            if not isinstance(value, unicode):
+            if not isinstance(value, six.text_type):
                 value = value.decode('utf-8')
             uvalues.append(value)
         if not uvalues:
