@@ -5,6 +5,9 @@ Changelog
 1.0.3 (unreleased)
 ------------------
 
+- Switched to tox for testing, builodut gone.
+  [jensens]
+
 - Python 2/3 compatibility
   [agitator]
 

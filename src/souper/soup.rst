@@ -51,7 +51,7 @@ soup. It must be registered as utility with desired soup id.
     Traceback (most recent call last):
     ...
         raise ComponentLookupError(interface, name)
-    ComponentLookupError: (<InterfaceClass souper.interfaces.ICatalogFactory>, 'mysoup')
+    ..ComponentLookupError: (<InterfaceClass souper.interfaces.ICatalogFactory>, 'mysoup')
 
     >>> from zope.component import provideUtility
     >>> from repoze.catalog.catalog import Catalog
