@@ -47,11 +47,12 @@ soup. It must be registered as utility with desired soup id.
 
     >>> from zope.component import getUtility
     >>> from souper.interfaces import ICatalogFactory
-    >>> catalogfactory = getUtility(ICatalogFactory, name='mysoup')
-    Traceback (most recent call last):
-    ...
-        raise ComponentLookupError(interface, name)
-    ComponentLookupError: (<InterfaceClass souper.interfaces.ICatalogFactory>, 'mysoup')
+    >>> from zope.interface.interfaces import ComponentLookupError
+    >>> try:
+    ...     catalogfactory = getUtility(ICatalogFactory, name='mysoup')
+    ... except ComponentLookupError:
+    ...     print("ComponentLookupError")
+    ComponentLookupError
 
     >>> from zope.component import provideUtility
     >>> from repoze.catalog.catalog import Catalog
