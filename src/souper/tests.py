@@ -3,23 +3,23 @@ import doctest
 import unittest
 
 
-optionflags = doctest.NORMALIZE_WHITESPACE | \
-              doctest.ELLIPSIS | \
-              doctest.REPORT_ONLY_FIRST_FAILURE
+optionflags = (
+    doctest.NORMALIZE_WHITESPACE
+    | doctest.ELLIPSIS
+    | doctest.REPORT_ONLY_FIRST_FAILURE
+)
 
-TESTFILES = [
-    'soup.rst',
-]
+TESTFILES = ["soup.rst"]
 
 
 def test_suite():
-    return unittest.TestSuite([
-        doctest.DocFileSuite(
-            filename,
-            optionflags=optionflags,
-        ) for filename in TESTFILES
-    ])
+    return unittest.TestSuite(
+        [
+            doctest.DocFileSuite(filename, optionflags=optionflags)
+            for filename in TESTFILES
+        ]
+    )
 
 
-if __name__ == '__main__':                                # pragma NO COVERAGE
-    unittest.main(defaultTest='test_suite')               # pragma NO COVERAGE
+if __name__ == "__main__":  # pragma NO COVERAGE
+    unittest.main(defaultTest="test_suite")  # pragma NO COVERAGE
