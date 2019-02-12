@@ -1,20 +1,22 @@
-import random
-from zope.interface import implementer
-from zope.component import getUtility
-from zope.component import queryAdapter
+# -*- coding: utf-8 -*-
 from BTrees.IOBTree import IOBTree
 from BTrees.Length import Length
+from node.ext.zodb import OOBTNode
 from persistent import Persistent
+from plumber import Behavior
 from plumber import default
 from plumber import plumber
-from plumber import Behavior
-from node.ext.zodb import OOBTNode
-from souper.interfaces import ISoup
-from souper.interfaces import IRecord
 from souper.interfaces import ICatalogFactory
-from souper.interfaces import IStorageLocator
 from souper.interfaces import INodeAttributeIndexer
 from souper.interfaces import INodeTextIndexer
+from souper.interfaces import IRecord
+from souper.interfaces import ISoup
+from souper.interfaces import IStorageLocator
+from zope.component import getUtility
+from zope.component import queryAdapter
+from zope.interface import implementer
+
+import random
 import six
 
 

@@ -5,6 +5,9 @@ Changelog
 1.0.3 (unreleased)
 ------------------
 
+- Code style (black, isort, utf8headers).
+  [jensens]
+
 - Switched to tox for testing, builodut gone.
   [jensens]
 

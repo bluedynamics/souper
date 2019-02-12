@@ -1,7 +1,6 @@
-from zope.interface import (
-    Interface,
-    Attribute,
-)
+# -*- coding: utf-8 -*-
+from zope.interface import Attribute
+from zope.interface import Interface
 from zope.interface.common.mapping import IFullMapping
 
 
