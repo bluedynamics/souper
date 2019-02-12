@@ -84,10 +84,8 @@ soup. It must be registered as utility with desired soup id.
     >>> catalog.__class__
     <class 'repoze.catalog.catalog.Catalog'>
 
-    >>> sorted(catalog.items())
-    [(u'keywords', <repoze.catalog.indexes.keyword.CatalogKeywordIndex object at 0x...>),
-    (u'text', <repoze.catalog.indexes.text.CatalogTextIndex object at 0x...>),
-    (u'user', <repoze.catalog.indexes.field.CatalogFieldIndex object at 0x...>)]
+    >>> sorted(catalog.keys())
+    ['keywords', 'text', 'user']
 
 Record
 ======
