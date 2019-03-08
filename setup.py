@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     # zest releaser does not change cfg file.
-    version='1.1.0.dev0',
+    version='1.1.0',
     # thanks to this bug
     # https://github.com/pypa/setuptools/issues/1136
     # we need one line in here:
