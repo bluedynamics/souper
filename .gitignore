@@ -22,6 +22,7 @@ devsrc
 docs/Makefile
 docs/make.bat
 dist
+__pycache__
 /include/
 /lib/
 /local/
