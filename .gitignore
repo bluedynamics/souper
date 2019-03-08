@@ -5,6 +5,8 @@ downloads
 *.egg-info
 develop-eggs
 .installed.cfg
+.tox
+.python-version
 *.pyc
 *.pyo
 src/packages

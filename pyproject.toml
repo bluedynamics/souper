@@ -1,0 +1,12 @@
+[tool.black]
+line-length = 79
+exclude = '''
+(
+    dist/    \
+    |\.git/  \
+    |\.hg/|\.mypy_cache/ \
+    |WebService_services_types\.py  \
+    |GatewayWebService_services\.py
+)
+'''
+

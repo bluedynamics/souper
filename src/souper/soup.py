@@ -1,26 +1,23 @@
-import random
-from zope.interface import implementer
-from zope.component import (
-    getUtility,
-    queryAdapter,
-)
+# -*- coding: utf-8 -*-
 from BTrees.IOBTree import IOBTree
 from BTrees.Length import Length
-from persistent import Persistent
-from plumber import (
-    default,
-    plumber,
-    Behavior,
-)
 from node.ext.zodb import OOBTNode
-from .interfaces import (
-    ISoup,
-    IRecord,
-    ICatalogFactory,
-    IStorageLocator,
-    INodeAttributeIndexer,
-    INodeTextIndexer,
-)
+from persistent import Persistent
+from plumber import Behavior
+from plumber import default
+from plumber import plumber
+from souper.interfaces import ICatalogFactory
+from souper.interfaces import INodeAttributeIndexer
+from souper.interfaces import INodeTextIndexer
+from souper.interfaces import IRecord
+from souper.interfaces import ISoup
+from souper.interfaces import IStorageLocator
+from zope.component import getUtility
+from zope.component import queryAdapter
+from zope.interface import implementer
+
+import random
+import six
 
 
 def get_soup(soup_name, context):
@@ -28,7 +25,6 @@ def get_soup(soup_name, context):
 
 
 class SoupData(Persistent):
-
     def __init__(self):
         self.data = IOBTree()
         self.catalog = None
@@ -44,7 +40,6 @@ class SoupData(Persistent):
 
 @implementer(ISoup)
 class Soup(object):
-
     def __init__(self, soup_name, context):
         """initialize soup with its name and some context used in
         conjunction with the IStorageLocator adapter lookup.
@@ -56,9 +51,11 @@ class Soup(object):
     def storage(self):
         locator = queryAdapter(self.context, IStorageLocator)
         if not locator:
-            raise ValueError("Can't find IStorageLocator adapter for context "
-                             "%s in order to locate soup '%s'." % \
-                             (repr(self.context), self.soup_name))
+            raise ValueError(
+                "Can't find IStorageLocator adapter for context "
+                "%s in order to locate soup '%s'."
+                % (repr(self.context), self.soup_name)
+            )
         return locator.storage(self.soup_name)
 
     @property
@@ -90,21 +87,47 @@ class Soup(object):
         self.catalog.index_doc(record.intid, record)
         return record.intid
 
-    def query(self, queryobject, sort_index=None, limit=None, sort_type=None,
-              reverse=False, names=None, with_size=False):
-        size, iids = self.catalog.query(queryobject, sort_index=sort_index,
-                                        limit=limit, sort_type=sort_type,
-                                        reverse=reverse, names=names)
+    def query(
+        self,
+        queryobject,
+        sort_index=None,
+        limit=None,
+        sort_type=None,
+        reverse=False,
+        names=None,
+        with_size=False,
+    ):
+        size, iids = self.catalog.query(
+            queryobject,
+            sort_index=sort_index,
+            limit=limit,
+            sort_type=sort_type,
+            reverse=reverse,
+            names=names,
+        )
         if with_size:
             yield size
         for iid in iids:
             yield self.data[iid]
 
-    def lazy(self, queryobject, sort_index=None, limit=None, sort_type=None,
-              reverse=False, names=None, with_size=False):
-        size, iids = self.catalog.query(queryobject, sort_index=sort_index,
-                                        limit=limit, sort_type=sort_type,
-                                        reverse=reverse, names=names)
+    def lazy(
+        self,
+        queryobject,
+        sort_index=None,
+        limit=None,
+        sort_type=None,
+        reverse=False,
+        names=None,
+        with_size=False,
+    ):
+        size, iids = self.catalog.query(
+            queryobject,
+            sort_index=sort_index,
+            limit=limit,
+            sort_type=sort_type,
+            reverse=reverse,
+            names=names,
+        )
         if with_size:
             yield size
         for iid in iids:
@@ -118,8 +141,9 @@ class Soup(object):
         """trashed the existing catalog and creates a new one using the
         named utility ICatalogFactory.
         """
-        self.storage.catalog = getUtility(ICatalogFactory,
-                                          name=self.soup_name)(self.context)
+        self.storage.catalog = getUtility(
+            ICatalogFactory, name=self.soup_name
+        )(self.context)
         self.reindex()
 
     def reindex(self, records=None):
@@ -139,7 +163,7 @@ class Soup(object):
         try:
             del self.data[record.intid]
             self.storage.length.change(-1)
-        except Exception, e:
+        except Exception as e:
             raise e
         self.catalog.unindex_doc(record.intid)
 
@@ -159,7 +183,6 @@ class Soup(object):
 
 
 class LazyRecord(object):
-
     def __init__(self, intid, soup):
         self.intid = intid
         self.soup = soup
@@ -180,7 +203,6 @@ class Record(OOBTNode):
 
 @implementer(INodeAttributeIndexer)
 class NodeAttributeIndexer(object):
-
     def __init__(self, attr):
         self.attr = attr
 
@@ -192,15 +214,14 @@ class NodeAttributeIndexer(object):
 
 @implementer(INodeTextIndexer)
 class NodeTextIndexer(object):
-
     def __init__(self, attrs):
         self.attrs = attrs
 
     def __call__(self, context, default):
         values = list()
         for attr in self.attrs:
-            val = context.attrs.get(attr, u'')
-            if not isinstance(val, basestring):
+            val = context.attrs.get(attr, u"")
+            if not isinstance(val, six.string_types):
                 val = str(val)
             values.append(val)
         uvalues = list()
@@ -208,9 +229,9 @@ class NodeTextIndexer(object):
             value = value.strip()
             if not value:
                 continue
-            if not isinstance(value, unicode):
-                value = value.decode('utf-8')
+            if not isinstance(value, six.text_type):
+                value = value.decode("utf-8")
             uvalues.append(value)
         if not uvalues:
             return default
-        return u' '.join(uvalues)
+        return u" ".join(uvalues)

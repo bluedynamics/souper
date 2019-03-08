@@ -47,11 +47,12 @@ soup. It must be registered as utility with desired soup id.
 
     >>> from zope.component import getUtility
     >>> from souper.interfaces import ICatalogFactory
-    >>> catalogfactory = getUtility(ICatalogFactory, name='mysoup')
-    Traceback (most recent call last):
-    ...
-        raise ComponentLookupError(interface, name)
-    ComponentLookupError: (<InterfaceClass souper.interfaces.ICatalogFactory>, 'mysoup')
+    >>> from zope.interface.interfaces import ComponentLookupError
+    >>> try:
+    ...     catalogfactory = getUtility(ICatalogFactory, name='mysoup')
+    ... except ComponentLookupError:
+    ...     print("ComponentLookupError")
+    ComponentLookupError
 
     >>> from zope.component import provideUtility
     >>> from repoze.catalog.catalog import Catalog
@@ -83,10 +84,8 @@ soup. It must be registered as utility with desired soup id.
     >>> catalog.__class__
     <class 'repoze.catalog.catalog.Catalog'>
 
-    >>> sorted(catalog.items())
-    [(u'keywords', <repoze.catalog.indexes.keyword.CatalogKeywordIndex object at 0x...>),
-    (u'text', <repoze.catalog.indexes.text.CatalogTextIndex object at 0x...>),
-    (u'user', <repoze.catalog.indexes.field.CatalogFieldIndex object at 0x...>)]
+    >>> sorted(catalog.keys())
+    ['keywords', 'text', 'user']
 
 Record
 ======

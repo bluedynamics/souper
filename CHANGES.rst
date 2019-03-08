@@ -2,10 +2,17 @@
 Changelog
 =========
 
-1.0.3 (unreleased)
+1.1.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Code style (black, isort, utf8headers).
+  [jensens]
+
+- Switched to tox for testing, builodut gone.
+  [jensens]
+
+- Python 2/3 compatibility
+  [agitator]
 
 
 1.0.2 (2015-02-25)

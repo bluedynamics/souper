@@ -1,13 +1,13 @@
-from zope.interface import (
-    Interface,
-    Attribute,
-)
+# -*- coding: utf-8 -*-
+from zope.interface import Attribute
+from zope.interface import Interface
 from zope.interface.common.mapping import IFullMapping
 
 
 class ISoup(Interface):
     """The Container Interface.
     """
+
     soup_name = Attribute(u"The identifier of this Soup")
     nextrecordindex = Attribute(u"The next record index to use.")
 
@@ -64,7 +64,6 @@ class ICatalogFactory(Interface):
 
 
 class IStorageLocator(Interface):
-
     def storage(soup_name):
         """return soup with given soup_name
         """

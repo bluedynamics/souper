@@ -1,8 +1,14 @@
+
+.. image:: https://travis-ci.org/bluedynamics/souper.svg?branch=master
+    :target: https://travis-ci.org/bluedynamics/souper
+
 ZODB Storage for lots of (light weight) data. Utilizes
 `repoze.catalog <http://pypi.python.org/pypi/repoze.catalog>`_,
 `ZODB BTrees <http://www.zodb.org/documentation/guide/modules.html#btrees-package>`_,
 `node <http://pypi.python.org/pypi/node>`_ (and
 `node.ext.zodb <http://pypi.python.org/pypi/node.ext.zodb>`_).
+
+.. image:: https://raw.githubusercontent.com/bluedynamics/souper/master/docs/Souper-64.png
 
 Souper is a tool for programmers. It offers an integrated storage tied together
 with indexes in a catalog. The records in the storage are generic. It is
