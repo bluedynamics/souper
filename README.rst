@@ -1,3 +1,10 @@
+https://raw.githubusercontent.com/bluedynamics/souper/master/docs/Souper-64.png
+
+.. image:: https://raw.githubusercontent.com/bluedynamics/souper/master/docs/Souper-64.png
+
+.. image:: https://travis-ci.org/bluedynamics/souper.svg?branch=master
+    :target: https://travis-ci.org/bluedynamics/souper
+
 ZODB Storage for lots of (light weight) data. Utilizes
 `repoze.catalog <http://pypi.python.org/pypi/repoze.catalog>`_,
 `ZODB BTrees <http://www.zodb.org/documentation/guide/modules.html#btrees-package>`_,

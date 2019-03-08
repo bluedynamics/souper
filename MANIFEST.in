@@ -1,3 +1,7 @@
 include *.rst
-recursive-include src *
+include *.toml
+include tox.ini
 recursive-exclude src *.pyc *.pyo
+recursive-include docs *.png
+recursive-include docs *.svg
+recursive-include src *
