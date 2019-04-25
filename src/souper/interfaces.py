@@ -14,15 +14,15 @@ class ISoup(Interface):
     def add(record):
         """Add record to soup.
 
-        @param record: IRecord implementation
-        @return: intid for record
+        @param record: IRecord implementation.
+        @return: intid for record.
         """
 
     def query(**kw):
         """Query Soup for Records.
 
-        @param kw: Keyword arguments defining the query
-        @return: list of records
+        @param kw: Keyword arguments defining the query.
+        @return: list of records.
         """
 
     def rebuild(self):
@@ -59,13 +59,14 @@ class ICatalogFactory(Interface):
     def __call__(context):
         """Create and return the Catalog.
 
-        @param return: zope.app.catalog.catalog.Catalog instance
+        @param return: zope.app.catalog.catalog.Catalog instance.
         """
 
 
 class IStorageLocator(Interface):
+
     def storage(soup_name):
-        """return soup with given soup_name
+        """Return soup with given soup_name.
         """
 
 
@@ -74,7 +75,7 @@ class IRecordIndexer(Interface):
     """
 
     def __call__(context, default):
-        """returns value to be indexed.
+        """Return value to be indexed.
         """
 
 

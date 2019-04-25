@@ -6,10 +6,11 @@ import six
 
 
 optionflags = (
-    doctest.NORMALIZE_WHITESPACE
-    | doctest.ELLIPSIS
-    | doctest.REPORT_ONLY_FIRST_FAILURE
+    doctest.NORMALIZE_WHITESPACE |
+    doctest.ELLIPSIS |
+    doctest.REPORT_ONLY_FIRST_FAILURE
 )
+
 
 TESTFILES = ["soup.rst"]
 

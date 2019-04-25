@@ -5,7 +5,7 @@ from node.ext.zodb import OOBTNode
 from persistent import Persistent
 from plumber import Behavior
 from plumber import default
-from plumber import plumber
+from plumber import plumbing
 from souper.interfaces import ICatalogFactory
 from souper.interfaces import INodeAttributeIndexer
 from souper.interfaces import INodeTextIndexer
@@ -15,7 +15,6 @@ from souper.interfaces import IStorageLocator
 from zope.component import getUtility
 from zope.component import queryAdapter
 from zope.interface import implementer
-
 import random
 import six
 
@@ -25,6 +24,7 @@ def get_soup(soup_name, context):
 
 
 class SoupData(Persistent):
+
     def __init__(self):
         self.data = IOBTree()
         self.catalog = None
@@ -40,8 +40,9 @@ class SoupData(Persistent):
 
 @implementer(ISoup)
 class Soup(object):
+
     def __init__(self, soup_name, context):
-        """initialize soup with its name and some context used in
+        """Initialize soup with its name and some context used in
         conjunction with the IStorageLocator adapter lookup.
         """
         self.soup_name = soup_name
@@ -64,9 +65,9 @@ class Soup(object):
 
     @property
     def catalog(self):
-        """returns the catalog of the soup
+        """Return the catalog of the soup.
 
-        if the catalog does not exist it creates a new and empty catalog using
+        If the catalog does not exist it creates a new and empty catalog using
         the named utility ICatalogFactory.
         """
         storage = self.storage
@@ -79,7 +80,7 @@ class Soup(object):
         return self.data[intid]
 
     def add(self, record):
-        """adds a new record to the soup, creates soup unique id and index it.
+        """Add a new record to the soup, create soup unique id and index it.
         """
         record.intid = self._generateid()
         self.data[record.intid] = record
@@ -138,7 +139,7 @@ class Soup(object):
         self.rebuild()
 
     def rebuild(self):
-        """trashed the existing catalog and creates a new one using the
+        """Drop the existing catalog and create a new one using the
         named utility ICatalogFactory.
         """
         self.storage.catalog = getUtility(
@@ -147,9 +148,9 @@ class Soup(object):
         self.reindex()
 
     def reindex(self, records=None):
-        """reindex one or more specific records or all records.
+        """Reindex one or more specific records or all records.
 
-        if records is not given all records are indexed. Otherwise for records
+        If records is not given all records are indexed. Otherwise for records
         an iterable of records is expected.
         """
         if records is None:
@@ -158,7 +159,7 @@ class Soup(object):
             self.catalog.index_doc(record.intid, record)
 
     def __delitem__(self, record):
-        """remove one specific record and unindex it.
+        """Remove one specific record and unindex it.
         """
         try:
             del self.data[record.intid]
@@ -171,7 +172,7 @@ class Soup(object):
     _randrange = random.randrange
 
     def _generateid(self):
-        # taken from zope.app.intid.
+        # Taken from zope.app.intid.
         while True:
             if self._v_nextid is None:
                 self._v_nextid = self._randrange(0, 2 ** 31)
@@ -183,6 +184,7 @@ class Soup(object):
 
 
 class LazyRecord(object):
+
     def __init__(self, intid, soup):
         self.intid = intid
         self.soup = soup
@@ -196,13 +198,14 @@ class RecordBehavior(Behavior):
     intid = default(None)
 
 
+@plumbing(RecordBehavior)
 class Record(OOBTNode):
-    __metaclass__ = plumber
-    __plumbing__ = RecordBehavior
+    pass
 
 
 @implementer(INodeAttributeIndexer)
 class NodeAttributeIndexer(object):
+
     def __init__(self, attr):
         self.attr = attr
 
@@ -214,6 +217,7 @@ class NodeAttributeIndexer(object):
 
 @implementer(INodeTextIndexer)
 class NodeTextIndexer(object):
+
     def __init__(self, attrs):
         self.attrs = attrs
 
