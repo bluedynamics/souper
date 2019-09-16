@@ -243,7 +243,8 @@ Reset (or clear) the soup
 -------------------------
 
 To remove all data from the soup and empty and rebuild the catalog call ``clear``.
-Attention: all data is lost!
+
+**Attention**: *All data is lost!*
 
 .. code-block:: pycon
 
