@@ -6,10 +6,9 @@ ZODB Storage for lots of (light weight) data.
 
 Utilizes:
 
+- `ZODB <http://www.zodb.org/>`_ and its `BTrees <http://www.zodb.org/documentation/guide/modules.html#btrees-package>`_,
+- `node <http://pypi.python.org/pypi/node>`_ (and `node.ext.zodb <http://pypi.python.org/pypi/node.ext.zodb>`_).
 - `repoze.catalog <http://pypi.python.org/pypi/repoze.catalog>`_,
-- `ZODB BTrees <http://www.zodb.org/documentation/guide/modules.html#btrees-package>`_,
-- `node <http://pypi.python.org/pypi/node>`_ (and
-- `node.ext.zodb <http://pypi.python.org/pypi/node.ext.zodb>`_).
 
 .. image:: https://raw.githubusercontent.com/bluedynamics/souper/master/docs/Souper-64.png
 
@@ -17,7 +16,7 @@ Souper is a tool for programmers. It offers an integrated storage tied together 
 The records in the storage are generic.
 It is possible to store any data on a record if it is persistent pickable in ZODB.
 
-Souper can be used used in any python application using the ZODB, such as `Pyramid <http://docs.pylonsproject.org/en/latest/docs/pyramid.html>`_ or `Plone <http://plone.org>`_.
+Souper can be used used in any Python application, either standalone using the pure ZODB or with `Pyramid <http://docs.pylonsproject.org/en/latest/docs/pyramid.html>`_, `Zope <https://www.zope.org/>`_ or `Plone <http://plone.org>`_.
 
 
 Using Souper
