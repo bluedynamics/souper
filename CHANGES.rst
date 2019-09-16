@@ -5,7 +5,8 @@ Changelog
 1.1.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Cleanup NodeTextIndexer (one loop is enough).
+  [jensens]
 
 
 1.1.0 (2019-03-08)

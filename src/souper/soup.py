@@ -224,18 +224,15 @@ class NodeTextIndexer(object):
     def __call__(self, context, default):
         values = list()
         for attr in self.attrs:
-            val = context.attrs.get(attr, u"")
-            if not isinstance(val, six.string_types):
-                val = str(val)
-            values.append(val)
-        uvalues = list()
-        for value in values:
+            value = context.attrs.get(attr, u"")
+            if isinstance(value, six.binary_type):
+                value = value.decode("utf-8")
+            if not isinstance(value, six.string_types):
+                value = str(value)
             value = value.strip()
             if not value:
                 continue
-            if not isinstance(value, six.text_type):
-                value = value.decode("utf-8")
-            uvalues.append(value)
-        if not uvalues:
+            values.append(value)
+        if not values:
             return default
-        return u" ".join(uvalues)
+        return u" ".join(values)
