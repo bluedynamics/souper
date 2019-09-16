@@ -2,7 +2,7 @@
 Changelog
 =========
 
-1.1.1 (unreleased)
+1.1.1 (2019-09-16)
 ------------------
 
 - Cleanup NodeTextIndexer (one loop is enough).
