@@ -5,7 +5,8 @@ Changelog
 1.1.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Release wheel.
+  [rnix]
 
 
 1.1.1 (2019-09-16)

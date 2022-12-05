@@ -22,7 +22,6 @@ Souper can be used used in any Python application, either standalone using the p
 Using Souper
 ============
 
-
 Providing a Locator
 -------------------
 
